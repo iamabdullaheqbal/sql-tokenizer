@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #F7F8FC;
+  --surface: #FFFFFF;
+  --surface-2: #F0F2FA;
+  --border: #E2E6F3;
+  --accent: #5B6AF0;
+  --accent-light: #EEF0FD;
+  --accent-dark: #3D4DD4;
+  --success: #22C55E;
+  --success-light: #DCFCE7;
+  --error: #EF4444;
+  --error-light: #FEE2E2;
+  --warning: #F59E0B;
+  --warning-light: #FEF3C7;
+  --text-primary: #1A1D2E;
+  --text-secondary: #6B7280;
+  --text-muted: #9CA3AF;
+  
+  /* token colors */
+  --token-keyword: #5B6AF0;
+  --token-keyword-bg: #EEF0FD;
+  --token-identifier: #0D9488;
+  --token-identifier-bg: #CCFBF1;
+  --token-string: #D97706;
+  --token-string-bg: #FEF3C7;
+  --token-number: #7C3AED;
+  --token-number-bg: #F5F3FF;
+  --token-operator: #DC2626;
+  --token-operator-bg: #FEE2E2;
+  --token-punctuation: #6B7280;
+  --token-punctuation-bg: #F3F4F6;
+  --token-aggregate: #BE185D;
+  --token-aggregate-bg: #FCE7F3;
+  --token-wildcard: #0369A1;
+  --token-wildcard-bg: #E0F2FE;
+  --token-unknown: #374151;
+  --token-unknown-bg: #E5E7EB;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+textarea {
+  font-family: 'JetBrains Mono', monospace;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+.token-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  cursor: default;
+  transition: transform 0.1s;
+  border: 1px solid transparent;
+}
+
+.token-chip:hover {
+  transform: translateY(-1px);
+}
+
+.token-KEYWORD        { color: var(--token-keyword);     background: var(--token-keyword-bg);     border-color: #C7CDF9; }
+.token-IDENTIFIER     { color: var(--token-identifier);  background: var(--token-identifier-bg);  border-color: #99F6E4; }
+.token-STRING         { color: var(--token-string);      background: var(--token-string-bg);      border-color: #FDE68A; }
+.token-NUMBER         { color: var(--token-number);      background: var(--token-number-bg);      border-color: #DDD6FE; }
+.token-OPERATOR       { color: var(--token-operator);    background: var(--token-operator-bg);    border-color: #FECACA; }
+.token-PUNCTUATION    { color: var(--token-punctuation); background: var(--token-punctuation-bg); border-color: #E5E7EB; }
+.token-AGGREGATE_FUNCTION { color: var(--token-aggregate); background: var(--token-aggregate-bg); border-color: #FBCFE8; }
+.token-WILDCARD       { color: var(--token-wildcard);    background: var(--token-wildcard-bg);    border-color: #BAE6FD; }
+.token-UNKNOWN        { color: var(--token-unknown);     background: var(--token-unknown-bg);     border-color: #D1D5DB; }
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+.step-item:last-child { border-bottom: none; }
+
+.step-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.animate-in {
+  animation: fadeIn 0.25s ease forwards;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.loading-dot { animation: pulse-dot 1s ease-in-out infinite; }
+.loading-dot:nth-child(2) { animation-delay: 0.2s; }
+.loading-dot:nth-child(3) { animation-delay: 0.4s; }
