@@ -1,8 +1,4 @@
-# ─────────────────────────────────────────────
-# LEXICAL ANALYSIS (No Python libraries used)
-# ─────────────────────────────────────────────
-# Hand-written character-by-character scanner.
-# ─────────────────────────────────────────────
+
 
 from typing import List
 
