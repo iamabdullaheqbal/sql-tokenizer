@@ -23,6 +23,7 @@ const TOKEN_META: Record<string, { label: string; emoji: string }> = {
 };
 
 const EXAMPLES = [
+  // ── Valid queries ──────────────────────────────────────────
   {
     label: "SELECT with WHERE",
     query: "SELECT id, name, age FROM students WHERE age > 18 ORDER BY name ASC",
@@ -44,8 +45,65 @@ const EXAMPLES = [
     query: "DELETE FROM orders WHERE status = 'cancelled' AND total < 100",
   },
   {
-    label: "Syntax Error (missing FROM)",
+    label: "SELECT DISTINCT",
+    query: "SELECT DISTINCT department FROM employees ORDER BY department ASC",
+  },
+  {
+    label: "GROUP BY with HAVING",
+    query: "SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5",
+  },
+  {
+    label: "SELECT with BETWEEN",
+    query: "SELECT name, salary FROM employees WHERE salary BETWEEN 50000 AND 80000",
+  },
+  {
+    label: "SELECT with IN",
+    query: "SELECT name FROM students WHERE grade IN ('A', 'B', 'C')",
+  },
+  {
+    label: "SELECT with IS NULL",
+    query: "SELECT name FROM employees WHERE manager_id IS NULL",
+  },
+  // ── Error queries ──────────────────────────────────────────
+  {
+    label: "❌ Missing FROM",
     query: "SELECT name age WHERE id = 1",
+  },
+  {
+    label: "❌ Missing WHERE operator",
+    query: "SELECT * FROM students WHERE age",
+  },
+  {
+    label: "❌ Missing VALUES keyword",
+    query: "INSERT INTO students (id, name) (1, 'Bob')",
+  },
+  {
+    label: "❌ Missing SET in UPDATE",
+    query: "UPDATE employees salary = 5000 WHERE id = 3",
+  },
+  {
+    label: "❌ Unknown statement (SHOW)",
+    query: "SHOW TABLES FROM database",
+  },
+  {
+    label: "❌ Invalid character (@)",
+    query: "SELECT name FROM students WHERE email = @input",
+  },
+  {
+    label: "❌ Keyword used as table name",
+    query: "SELECT id FROM SELECT WHERE id = 1",
+  },
+  {
+    label: "❌ Incomplete BETWEEN",
+    query: "SELECT name FROM employees WHERE salary BETWEEN 1000",
+  },
+  {
+    label: "❌ Missing closing parenthesis",
+    query: "INSERT INTO orders (id, total VALUES (5, 200)",
+  },
+  {
+    label: "❌ Extra tokens after statement",
+    query: "DELETE FROM orders WHERE id = 1 ORDER name",
   },
 ];
 
@@ -946,15 +1004,29 @@ export default function Home() {
               >
                 Examples
               </div>
-              <div style={{ padding: "8px" }}>
-                {EXAMPLES.map((ex) => (
+              <div style={{ padding: "8px", maxHeight: 480, overflowY: "auto" }}>
+                {/* Valid examples */}
+                <div
+                  style={{
+                    padding: "4px 10px 6px",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#15803D",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.07em",
+                    marginTop: 4,
+                  }}
+                >
+                  ✅ Valid Queries
+                </div>
+                {EXAMPLES.filter((ex) => !ex.label.startsWith("❌")).map((ex) => (
                   <button
                     key={ex.label}
                     onClick={() => handleExample(ex.query)}
                     style={{
                       width: "100%",
                       textAlign: "left",
-                      padding: "10px 12px",
+                      padding: "9px 12px",
                       borderRadius: 10,
                       border: "none",
                       background: "transparent",
@@ -977,6 +1049,77 @@ export default function Home() {
                         fontWeight: 600,
                         fontSize: 13,
                         color: "var(--accent)",
+                        marginBottom: 2,
+                      }}
+                    >
+                      {ex.label}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "JetBrains Mono, monospace",
+                        fontSize: 11,
+                        color: "var(--text-secondary)",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {ex.query}
+                    </div>
+                  </button>
+                ))}
+
+                {/* Divider */}
+                <div
+                  style={{
+                    margin: "8px 10px 4px",
+                    borderTop: "1px solid var(--border)",
+                  }}
+                />
+
+                {/* Error examples */}
+                <div
+                  style={{
+                    padding: "4px 10px 6px",
+                    fontSize: 10,
+                    fontWeight: 700,
+                    color: "#DC2626",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.07em",
+                  }}
+                >
+                  ❌ Error Examples
+                </div>
+                {EXAMPLES.filter((ex) => ex.label.startsWith("❌")).map((ex) => (
+                  <button
+                    key={ex.label}
+                    onClick={() => handleExample(ex.query)}
+                    style={{
+                      width: "100%",
+                      textAlign: "left",
+                      padding: "9px 12px",
+                      borderRadius: 10,
+                      border: "none",
+                      background: "transparent",
+                      cursor: "pointer",
+                      transition: "background 0.12s",
+                      fontFamily: "Poppins, sans-serif",
+                      marginBottom: 2,
+                    }}
+                    onMouseEnter={(e) =>
+                      ((e.currentTarget as HTMLElement).style.background =
+                        "#FEF2F2")
+                    }
+                    onMouseLeave={(e) =>
+                      ((e.currentTarget as HTMLElement).style.background =
+                        "transparent")
+                    }
+                  >
+                    <div
+                      style={{
+                        fontWeight: 600,
+                        fontSize: 13,
+                        color: "#DC2626",
                         marginBottom: 2,
                       }}
                     >

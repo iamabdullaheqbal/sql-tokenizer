@@ -102,12 +102,13 @@ def validate_query(req: ValidateRequest):
 def get_examples():
     return {
         "examples": [
+            # ── Valid queries ──────────────────────────────────────────
             {
                 "label": "Simple SELECT",
                 "query": "SELECT id, name, age FROM students WHERE age > 18 ORDER BY name ASC",
             },
             {
-                "label": "SELECT with aggregate",
+                "label": "Aggregate Functions",
                 "query": "SELECT COUNT(*), AVG(salary) FROM employees WHERE department = 'Engineering'",
             },
             {
@@ -125,6 +126,63 @@ def get_examples():
             {
                 "label": "SELECT DISTINCT",
                 "query": "SELECT DISTINCT department FROM employees ORDER BY department ASC",
+            },
+            {
+                "label": "GROUP BY with HAVING",
+                "query": "SELECT department, COUNT(*) FROM employees GROUP BY department HAVING COUNT(*) > 5",
+            },
+            {
+                "label": "SELECT with BETWEEN",
+                "query": "SELECT name, salary FROM employees WHERE salary BETWEEN 50000 AND 80000",
+            },
+            {
+                "label": "SELECT with IN",
+                "query": "SELECT name FROM students WHERE grade IN ('A', 'B', 'C')",
+            },
+            {
+                "label": "SELECT with IS NULL",
+                "query": "SELECT name FROM employees WHERE manager_id IS NULL",
+            },
+            # ── Error queries ──────────────────────────────────────────
+            {
+                "label": "❌ Missing FROM",
+                "query": "SELECT name age WHERE id = 1",
+            },
+            {
+                "label": "❌ Missing WHERE operator",
+                "query": "SELECT * FROM students WHERE age",
+            },
+            {
+                "label": "❌ Missing VALUES keyword",
+                "query": "INSERT INTO students (id, name) (1, 'Bob')",
+            },
+            {
+                "label": "❌ Missing SET in UPDATE",
+                "query": "UPDATE employees salary = 5000 WHERE id = 3",
+            },
+            {
+                "label": "❌ Unknown statement (SHOW)",
+                "query": "SHOW TABLES FROM database",
+            },
+            {
+                "label": "❌ Invalid character (@)",
+                "query": "SELECT name FROM students WHERE email = @input",
+            },
+            {
+                "label": "❌ Keyword used as table name",
+                "query": "SELECT id FROM SELECT WHERE id = 1",
+            },
+            {
+                "label": "❌ Incomplete BETWEEN",
+                "query": "SELECT name FROM employees WHERE salary BETWEEN 1000",
+            },
+            {
+                "label": "❌ Missing closing parenthesis",
+                "query": "INSERT INTO orders (id, total VALUES (5, 200)",
+            },
+            {
+                "label": "❌ Extra tokens after statement",
+                "query": "DELETE FROM orders WHERE id = 1 ORDER name",
             },
         ]
     }
