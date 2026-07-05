@@ -41,6 +41,8 @@
   --token-wildcard-bg: #E0F2FE;
   --token-unknown: #374151;
   --token-unknown-bg: #E5E7EB;
+  --token-comment: #6A7F5B;
+  --token-comment-bg: #F0F4EC;
 }
 
 * {
@@ -100,6 +102,7 @@ textarea:focus {
 .token-AGGREGATE_FUNCTION { color: var(--token-aggregate); background: var(--token-aggregate-bg); border-color: #FBCFE8; }
 .token-WILDCARD       { color: var(--token-wildcard);    background: var(--token-wildcard-bg);    border-color: #BAE6FD; }
 .token-UNKNOWN        { color: var(--token-unknown);     background: var(--token-unknown-bg);     border-color: #D1D5DB; }
+.token-COMMENT        { color: var(--token-comment);    background: var(--token-comment-bg);    border-color: #C6D4B8; font-style: italic; }
 
 .step-item {
   display: flex;

@@ -45,6 +45,14 @@ def tokenize(query: str) -> List[Token]:
 
         pos = i
 
+        # Single-line comment: -- comment text
+        if i + 1 < n and query[i] == '-' and query[i + 1] == '-':
+            start = i
+            while i < n and query[i] != '\n':
+                i += 1
+            tokens.append(Token("COMMENT", query[start:i].strip(), pos))
+            continue
+
         # String literal: 'value'
         if query[i] == "'":
             i += 1

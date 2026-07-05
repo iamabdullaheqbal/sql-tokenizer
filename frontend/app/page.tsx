@@ -20,6 +20,7 @@ const TOKEN_META: Record<string, { label: string; emoji: string }> = {
   AGGREGATE_FUNCTION: { label: "Aggregate Fn", emoji: "🩷" },
   WILDCARD: { label: "Wildcard", emoji: "🔷" },
   UNKNOWN: { label: "Unknown", emoji: "⚪" },
+  COMMENT: { label: "Comment", emoji: "💬" },
 };
 
 const EXAMPLES = [

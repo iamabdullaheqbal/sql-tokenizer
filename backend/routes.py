@@ -38,7 +38,9 @@ def validate_query(req: ValidateRequest):
     lex_errors = []
     clean_tokens = []
     for t in tokens:
-        if t.type == "UNKNOWN":
+        if t.type == "COMMENT":
+            continue  # comments are valid — strip them before parsing
+        elif t.type == "UNKNOWN":
             if t.value.startswith("'"):
                 lex_errors.append({
                     "message": f"Unclosed string literal at position {t.position} — the opening quote has no matching closing quote.",
