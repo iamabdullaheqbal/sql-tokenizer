@@ -39,12 +39,20 @@ def validate_query(req: ValidateRequest):
     clean_tokens = []
     for t in tokens:
         if t.type == "UNKNOWN":
-            lex_errors.append({
-                "message": f"Unknown character '{t.value}' at position {t.position} — this character is not valid in SQL.",
-                "hint": f"Remove or replace the character '{t.value}'. SQL supports letters, numbers, operators like =, <, >, and quotes for strings.",
-                "position": t.position,
-                "error_type": "Lexical Error",
-            })
+            if t.value.startswith("'"):
+                lex_errors.append({
+                    "message": f"Unclosed string literal at position {t.position} — the opening quote has no matching closing quote.",
+                    "hint": "Add a closing single quote (') at the end of your string value.",
+                    "position": t.position,
+                    "error_type": "Lexical Error",
+                })
+            else:
+                lex_errors.append({
+                    "message": f"Unknown character '{t.value}' at position {t.position} — this character is not valid in SQL.",
+                    "hint": f"Remove or replace the character '{t.value}'. SQL supports letters, numbers, operators like =, <, >, and quotes for strings.",
+                    "position": t.position,
+                    "error_type": "Lexical Error",
+                })
         else:
             clean_tokens.append(t)
 

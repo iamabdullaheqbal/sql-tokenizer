@@ -54,7 +54,10 @@ def tokenize(query: str) -> List[Token]:
             value = query[start:i]
             if i < n:
                 i += 1  # skip closing quote
-            tokens.append(Token("STRING", value, pos))
+                tokens.append(Token("STRING", value, pos))
+            else:
+                # Closing quote never found — lexical error
+                tokens.append(Token("UNKNOWN", f"'{value}", pos))
             continue
 
         # Number literal (integer or decimal, optional leading minus)
